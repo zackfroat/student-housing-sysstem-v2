@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landlord Dashboard</title>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.topbar img {
+    height: 90px;
+    margin-left: 15px;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    max-width: 420px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+
+    padding: 20px;
+
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ACTIVE STATES */
+.side-nav.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-nav h3 {
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.side-nav a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.side-nav a:hover {
+    background-color: #d69ce8;
+    color: #fff;
+}
+
+.logout {
+    background: #f44336;
+    color: #fff !important;
+}
+
+.logout:hover {
+    background: #d32f2f;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.content-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.content-box h3 {
+    color: #555;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-container input,
+.form-container select,
+.form-container button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-container button {
+    background-color: #d69ce8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #b76bc7;
+}
+
+@media (max-width: 600px) {
+    .side-nav {
+        width: 80%;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="hamburger" onclick="openNav()">☰</div>
+    <img src="img/2.png" alt="University Logo">
+</div>
+
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<div class="side-nav" id="sideNav">
+    <h3>Landlord Dashboard</h3>
+    <a href="account2.html">Account</a>
+    <a href="approve.html">Approved House</a>
+    <a href="contact2.html">Contact Us</a>
+    <a href="index.html" class="logout">Logout</a>
+</div>
+
+<div class="main-content">
+    <h1 class="header">Landlord Dashboard</h1>
+
+    <!-- House for Renting Form Section -->
+    <div class="content-box">
+        <h3>House for Renting</h3>
+        <form class="form-container" onsubmit="handleSubmit(event)" method="POST">
+            <input type="text" name="house_address" placeholder="House Address" required>
+            <input type="text" name="rent" placeholder="Rent (RM)" required>
+            <input type="text" name="water_bills" placeholder="Water Bills (RM)" required>
+            <input type="text" name="electricity_bills" placeholder="Electricity Bills (RM)" required>
+            <select name="tenant_gender" required>
+                <option value="" disabled selected>Select Tenant Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="both">Both</option>
+            </select>
+
+            <div>
+                <label>
+                    <input type="radio" name="rent_type" value="semester" required onclick="toggleRentFields()"> Rent per Semester
+                </label>
+                <label>
+                    <input type="radio" name="rent_type" value="month" onclick="toggleRentFields()"> Rent per Month
+                </label>
+            </div>
+
+            <input type="text" id="semester_rent" name="semester_rent" placeholder="Rent per Semester (RM)" style="display:none;">
+            <input type="text" id="monthly_rent" name="monthly_rent" placeholder="Rent per Month (RM)" style="display:none;">
+
+            <input type="text" name="distance_from_university" placeholder="Distance from University (km)" required>
+            <button type="submit">Submit House</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function toggleRentFields() {
+    const rentType = document.querySelector('input[name="rent_type"]:checked').value;
+    document.getElementById('semester_rent').style.display = rentType === 'semester' ? 'block' : 'none';
+    document.getElementById('monthly_rent').style.display = rentType === 'month' ? 'block' : 'none';
+}
+
+function handleSubmit(event) {
+    event.preventDefault();
+    alert('Your submission has been received and is pending approval.');
+    event.target.submit();
+}
+
+function openNav() {
+    document.getElementById("sideNav").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeNav() {
+    document.getElementById("sideNav").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeNav();
+});
+</script>
+</body>
+</html>

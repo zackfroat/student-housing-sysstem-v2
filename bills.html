@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bills</title>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* TOP BAR */
+.topbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+.topbar img {
+    height: 90px;
+    margin-left: 15px;
+}
+
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1002;
+    position: absolute;
+    left: 10px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+/* Side Nav */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    max-width: 420px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.side-nav.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Side Nav content */
+.side-nav h3 {
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.side-nav a {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.side-nav a:hover {
+    background-color: #d69ce8;
+    color: #fff;
+    display: inline-block;
+}
+
+.logout {
+    background: #f44336;
+    color: #fff !important;
+}
+
+.logout:hover {
+    background: #d32f2f;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.bill-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.bill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.bill-item:last-child {
+    border-bottom: none;
+}
+
+.bill-item h3 {
+    margin: 0;
+    color: #555;
+}
+
+.bill-item p {
+    margin: 0;
+    font-weight: bold;
+    color: #b76bc7;
+}
+
+.pay-button {
+    background-color: #d69ce8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pay-button:hover {
+    background-color: #b76bc7;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="hamburger" onclick="openNav()">☰</div>
+    <img src="img/2.png" alt="University Logo">
+    <div class="welcome-box">
+        Welcome, <span id="username">Student</span>!
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<!-- Side Nav -->
+<div class="side-nav" id="sideNav">
+    <h3>Welcome, <span id="username">Student</span></h3>
+
+    <a href="student.html">Home</a>
+    <a href="account1.html">Account</a>
+    <a href="housing.html">Housing</a>
+    <a href="renting.html">Renting</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="index.html" class="logout">Logout</a>
+</div>
+
+<div class="main-content">
+    <h1 class="header">Your Bills</h1>
+    <div class="bill-container">
+        <div class="bill-item">
+            <h3>Water Bill</h3>
+            <p>RM 50</p>
+            <button class="pay-button" onclick="payBill('Water Bill')">Pay</button>
+        </div>
+        <div class="bill-item">
+            <h3>Electricity Bill</h3>
+            <p>RM 70</p>
+            <button class="pay-button" onclick="payBill('Electricity Bill')">Pay</button>
+        </div>
+        <div class="bill-item">
+            <h3>Rent Bill</h3>
+            <p>RM 500</p>
+            <button class="pay-button" onclick="payBill('Rent Bill')">Pay</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Display Username
+const username = "Student1"; 
+document.getElementById("username").textContent = username;
+
+// Off-canvas navigation
+function openNav() {
+    document.getElementById("sideNav").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeNav() {
+    document.getElementById("sideNav").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeNav();
+});
+
+// Function to handle bill payment
+function payBill(billType) {
+    alert(`${billType} has been paid successfully!`);
+}
+</script>
+
+</body>
+</html>

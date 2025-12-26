@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+.topbar img {
+    height: 90px;
+    margin-left: 15px;
+}
+
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1002;
+    position: absolute;
+    left: 10px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+/* Side Nav */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    max-width: 420px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.side-nav.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Side Nav content */
+.side-nav h3 {
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.side-nav a {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.side-nav a:hover {
+    background-color: #d69ce8;
+    color: #fff;
+}
+
+.logout {
+    background: #f44336;
+    color: #fff !important;
+}
+
+.logout:hover {
+    background: #d32f2f;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.contact-method {
+    text-align: center;
+}
+
+.contact-method h3 {
+    color: #555;
+}
+
+.contact-method a {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+}
+
+.contact-method a:hover {
+    color: #b76bc7;
+}
+
+.contact-method img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-container label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: #b76bc7;
+}
+
+.submit-button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #d69ce8;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #b76bc7;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="hamburger" onclick="openNav()">☰</div>
+    <img src="img/2.png" alt="University Logo">
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<!-- Side Nav -->
+<div class="side-nav" id="sideNav">
+    <h3>Welcome, <span id="username">Landlord</span></h3>
+    <a href="landlord.html">Home</a>
+    <a href="account2.html">Account</a>
+    <a href="approve.html">Approved Houses</a>
+    <a href="index.html" class="logout">Logout</a>
+</div>
+
+<div class="main-content">
+    <h1 class="header">Contact Us</h1>
+    <div class="contact-container">
+        <!-- WhatsApp Contact -->
+        <div class="contact-method">
+            <h3>Contact via WhatsApp</h3>
+            <a href="https://wa.me/1234567890" target="_blank">
+                <img src="img/ws.png" alt="WhatsApp Icon"> WhatsApp Us
+            </a>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-method form-container">
+            <h3>Contact via Form</h3>
+            <form onsubmit="handleSubmit(event)">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+
+        <!-- Email Contact -->
+        <div class="contact-method">
+            <h3>Contact via Email</h3>
+            <a href="mailto:contact@university.com">
+                <img src="img/gm.png" alt="Email Icon"> Email Us
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Display Username
+const username = "Adam"; 
+document.getElementById("username").textContent = username;
+
+// Off-canvas navigation
+function openNav() {
+    document.getElementById("sideNav").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeNav() {
+    document.getElementById("sideNav").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeNav();
+});
+
+function handleSubmit(event) {
+    event.preventDefault();
+    alert("Your message has been sent successfully!");
+}
+</script>
+
+</body>
+</html>

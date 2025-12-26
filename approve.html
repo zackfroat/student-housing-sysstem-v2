@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approved Houses</title>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* TOP BAR */
+.topbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+}
+
+.topbar img {
+    height: 90px;
+    margin-left: 15px;
+}
+
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1002;
+    position: absolute;
+    left: 10px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+/* Side Nav */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    max-width: 420px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.side-nav.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Side Nav content */
+.side-nav h3 {
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.side-nav a {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.side-nav a:hover {
+    background-color: #d69ce8;
+    color: #fff;
+}
+
+.logout {
+    background: #f44336;
+    color: #fff !important;
+}
+
+.logout:hover {
+    background: #d32f2f;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    color: #b76bc7;
+    margin-bottom: 20px;
+}
+
+.content-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.house-details {
+    font-size: 14px;
+}
+
+.house-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="hamburger" onclick="openNav()">☰</div>
+    <img src="img/2.png" alt="University Logo">
+    <div class="welcome-box">
+        Approved Houses
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<!-- Side Nav -->
+<div class="side-nav" id="sideNav">
+    <h3>Welcome, <span id="username">Landlord</span></h3>
+    <a href="landlord.html">Home</a>
+    <a href="approve.html">Approved Houses</a>
+    <a href="contact2.html">Contact Us</a>
+    <a href="index.html" class="logout">Logout</a>
+</div>
+
+<div class="main-content">
+    <h1 class="header">Approved Houses</h1>
+
+    <!-- Approved House 1 -->
+    <div class="content-box">
+        <img class="house-image" src="img/r1.jpg" alt="House 1">
+        <div>
+            <h3>House 1</h3>
+            <p class="house-details"><strong>Address:</strong> 123 Main Street, Cityville</p>
+            <p class="house-details"><strong>Rent:</strong> RM 1,500/month</p>
+            <p class="house-details"><strong>Water Bills:</strong> RM 50</p>
+            <p class="house-details"><strong>Electricity Bills:</strong> RM 100</p>
+            <p class="house-details"><strong>Tenant Gender:</strong> Both</p>
+            <p class="house-details"><strong>Distance from University:</strong> 5 km</p>
+        </div>
+    </div>
+
+    <!-- Approved House 2 -->
+    <div class="content-box">
+        <img class="house-image" src="img/r2.jpg" alt="House 2">
+        <div>
+            <h3>House 2</h3>
+            <p class="house-details"><strong>Address:</strong> 456 Elm Street, Townsville</p>
+            <p class="house-details"><strong>Rent:</strong> RM 1,200/month</p>
+            <p class="house-details"><strong>Water Bills:</strong> RM 45</p>
+            <p class="house-details"><strong>Electricity Bills:</strong> RM 90</p>
+            <p class="house-details"><strong>Tenant Gender:</strong> Male</p>
+            <p class="house-details"><strong>Distance from University:</strong> 3 km</p>
+        </div>
+    </div>
+
+    <!-- Approved House 3 -->
+    <div class="content-box">
+        <img class="house-image" src="img/r3.jpg" alt="House 3">
+        <div>
+            <h3>House 3</h3>
+            <p class="house-details"><strong>Address:</strong> 789 Oak Avenue, Villagetown</p>
+            <p class="house-details"><strong>Rent:</strong> RM 1,800/semester</p>
+            <p class="house-details"><strong>Water Bills:</strong> RM 60</p>
+            <p class="house-details"><strong>Electricity Bills:</strong> RM 110</p>
+            <p class="house-details"><strong>Tenant Gender:</strong> Female</p>
+            <p class="house-details"><strong>Distance from University:</strong> 7 km</p>
+        </div>
+    </div>
+
+    <!-- Approved House 4 -->
+    <div class="content-box">
+        <img class="house-image" src="img/r4.jpg" alt="House 4">
+        <div>
+            <h3>House 4</h3>
+            <p class="house-details"><strong>Address:</strong> 101 Maple Road, Suburbia</p>
+            <p class="house-details"><strong>Rent:</strong> RM 1,600/month</p>
+            <p class="house-details"><strong>Water Bills:</strong> RM 55</p>
+            <p class="house-details"><strong>Electricity Bills:</strong> RM 95</p>
+            <p class="house-details"><strong>Tenant Gender:</strong> Both</p>
+            <p class="house-details"><strong>Distance from University:</strong> 6 km</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Display Username
+const username = "Adam"; 
+document.getElementById("username").textContent = username;
+
+// Off-canvas navigation
+function openNav() {
+    document.getElementById("sideNav").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeNav() {
+    document.getElementById("sideNav").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeNav();
+});
+</script>
+
+</body>
+</html>
