@@ -9,4 +9,4 @@ Landlord	landlord1	    landlord123
 as you all know, this is the second ver. of my my project, i will left a link for the original project i created 11 month ago below with some gdrive link for another project that fuses with a working database:
 
 1. https://zackfroat.github.io/student-housing-system/index.html
-2. 
+2. https://drive.google.com/drive/folders/1aR7bQ-3_5JqgSG9WNFDJZJJN5Xzwk1WO?usp=sharing
